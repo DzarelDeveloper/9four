@@ -1,6 +1,6 @@
 # 📚 Website Kelas - DzarelDeveloper
 
-Website ini adalah proyek edukatif yang dibuat untuk membantu pelajar dan komunitas IT dalam membangun website kelas yang keren hanya dengan HTML, CSS, dan JavaScript.
+Website ini adalah proyek edukatif yang dibuat untuk membantu pelajar dan komunitas Codesphere dalam membangun website kelas yang keren hanya dengan HTML, CSS, dan JavaScript.
 
 <div align="center">
   <img src="https://raw.githubusercontent.com/DzarelDeveloper/BloggerImg/refs/heads/main/website.png" alt="Banner Website Kelas DzarelDeveloper" style="max-width:100%; border-radius:12px;" />
