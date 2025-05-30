@@ -1,0 +1,1261 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Website 9four</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            --bg-color: #f7fafc;
+            --text-color: #1a202c;
+            --card-bg: #ffffff;
+            --accent-color: #3182ce;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+            --nav-bg: rgba(31, 41, 55, 0.9);
+            --footer-bg: rgba(31, 41, 55, 0.95);
+            --footer-text: #e2e8f0;
+            --footer-accent: #ff6f91;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-top: 60px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        body.no-scroll {
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--nav-bg);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            animation: slideDown 0.8s ease-out;
+            backdrop-filter: blur(6px);
+        }
+
+        .navbar {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .navbar-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1440px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1002;
+        }
+
+        .logo:hover {
+            color: #63b3ed;
+        }
+
+        .nav-links-left,
+        .nav-links-right {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links-left li,
+        .nav-links-right li {
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+            animation-delay: calc(0.2s * var(--i));
+        }
+
+        .nav-links-left a,
+        .nav-links-right a {
+            text-decoration: none;
+            color: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links-left a:hover,
+        .nav-links-right a:hover {
+            color: #63b3ed;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            color: white;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 3px;
+            background: white;
+            margin: 5px 0;
+            border-radius: 2px;
+            transition: all 0.4s ease-in-out;
+            transform-origin: center;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+            width: 26px;
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+            width: 26px;
+        }
+
+        .nav-menu {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background: rgba(31, 41, 55, 0.9);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 2rem;
+            flex-direction: column;
+            box-shadow: var(--shadow);
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+            list-style: none;
+            pointer-events: none;
+            display: none;
+        }
+
+        .nav-menu.active {
+            display: flex;
+            transform: translateY(0);
+            opacity: 1;
+            animation: slideNavIn 0.4s ease forwards;
+            pointer-events: auto;
+        }
+
+        .nav-menu li {
+            width: 100%;
+            text-align: center;
+            margin: 1rem 0;
+            opacity: 0;
+            animation: fadeInItem 0.3s ease forwards;
+            animation-delay: calc(0.1s * var(--i));
+        }
+
+        .nav-menu a {
+            font-size: 1.2rem;
+            padding: 0.75rem 1rem;
+            display: block;
+            color: white;
+            text-decoration: none;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .nav-menu a:hover,
+        .nav-menu a:active {
+            background: rgba(255, 255, 255, 0.1);
+            color: #63b3ed;
+            border-radius: 8px;
+        }
+
+        .hero {
+            min-height: 100vh;
+            padding: 8rem 2rem;
+            text-align: center;
+            color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.6);
+            z-index: 1;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-img {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            margin-bottom: 2rem;
+            border: 4px solid white;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+            object-fit: cover;
+        }
+
+        .hero h1 {
+            font-size: 4rem;
+            font-weight: 700;
+            color: #ff6f91;
+            text-shadow: 4px 4px 12px rgba(0, 0, 0, 0.5);
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            margin-bottom: 1rem;
+        }
+
+        .hero p {
+            font-size: 1.5rem;
+            font-weight: 400;
+            max-width: 600px;
+            color: white;
+        }
+
+        .content {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 5rem 2rem;
+        }
+
+        .about-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .about-text {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .about-text h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+        }
+
+        .about-text p {
+            font-size: 1.1rem;
+            color: #718096;
+            line-height: 1.8;
+        }
+
+        .about-button {
+            display: inline-block;
+            padding: 0.75rem 2rem;
+            background-color: #ff6f91;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: fit-content;
+        }
+
+        .about-button:hover {
+            background-color: #e55a7a;
+        }
+
+        .about-image {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .about-image img {
+            width: 100%;
+            max-width: 380px;
+            height: auto;
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            object-fit: cover;
+            aspect-ratio: 9/16;
+            max-height: 400px;
+        }
+
+        .video-section {
+            width: 100%;
+            margin: 5rem 0;
+            padding: 3rem;
+            background: #f7fafc;
+            box-shadow: var(--shadow);
+        }
+
+        .video-section h2 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: var(--text-color);
+            text-align: center;
+            margin-bottom: 1rem;
+        }
+
+        .video-section hr {
+            border: 0;
+            height: 2px;
+            background: var(--accent-color);
+            margin-bottom: 2rem;
+            width: 100px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .video-container {
+            display: grid;
+            grid-template-columns: 3fr 1fr;
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .main-video {
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            width: 100%;
+            position: relative;
+        }
+
+        .main-video.playing {
+            border: 2px solid #ff6f91;
+        }
+
+        .main-video video {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        #welcomeOverlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('Wp.png');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            z-index: 2000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #welcomeOverlay .overlay {
+            background: rgba(0, 0, 0, 0.7);
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        #welcomeOverlay .content {
+            position: relative;
+            z-index: 2;
+            padding: 15px;
+            width: 90%;
+            max-width: 800px;
+            box-sizing: border-box;
+            color: white;
+            text-align: center;
+        }
+
+        #welcomeOverlay h1 {
+            font-size: 6vw;
+            font-weight: bold;
+            color: #ff0000;
+            margin: 0;
+        }
+
+        #welcomeOverlay h2 {
+            font-size: 3vw;
+            font-weight: normal;
+            color: #FFD700;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+            margin: 0.5rem 0;
+        }
+
+        #welcomeOverlay h3 {
+            font-size: 8vw;
+            font-weight: bold;
+            margin: 1rem 0;
+            quotes: "“" "”";
+        }
+
+        #welcomeOverlay h3::before {
+            content: open-quote;
+        }
+
+        #welcomeOverlay h3::after {
+            content: close-quote;
+        }
+
+        #welcomeOverlay h4 {
+            font-size: 6vw;
+            font-weight: bold;
+            margin: 0.5rem 0;
+        }
+
+        #welcomeOverlay .button {
+            display: inline-block;
+            font-size: 3.5vw;
+            padding: 0.8rem 1.5rem;
+            background: rgba(255, 255, 255, 0.2);
+            border: 2px solid white;
+            border-radius: 20px;
+            text-decoration: none;
+            color: white;
+            margin: 1rem 0;
+            transition: background 0.3s;
+            cursor: pointer;
+            z-index: 2;
+            position: relative;
+        }
+
+        #welcomeOverlay .button:hover {
+            background: rgba(255, 255, 255, 0.4);
+        }
+
+        #welcomeOverlay p {
+            font-size: 2.5vw;
+            line-height: 1.5;
+            margin: 1rem auto;
+        }
+
+        #welcomeOverlay .dots {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin: 1rem 0;
+        }
+
+        #welcomeOverlay .dot {
+            width: 8px;
+            height: 8px;
+            background: white;
+            border-radius: 50%;
+        }
+
+        #welcomeOverlay .instagram {
+            font-size: 2vw;
+            margin-top: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            #welcomeOverlay .content {
+                padding: 10px;
+                width: 95%;
+            }
+            #welcomeOverlay h1 {
+                font-size: 8vw;
+            }
+            #welcomeOverlay h2 {
+                font-size: 4vw;
+            }
+            #welcomeOverlay h3 {
+                font-size: 10vw;
+            }
+            #welcomeOverlay h4 {
+                font-size: 8vw;
+            }
+            #welcomeOverlay .button {
+                font-size: 5vw;
+                padding: 0.6rem 1.2rem;
+                border-radius: 15px;
+            }
+            #welcomeOverlay p {
+                font-size: 3.5vw;
+                line-height: 1.6;
+            }
+            #welcomeOverlay .dots {
+                gap: 6px;
+            }
+            #welcomeOverlay .dot {
+                width: 6px;
+                height: 6px;
+            }
+            #welcomeOverlay .instagram {
+                font-size: 3vw;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #welcomeOverlay h1 {
+                font-size: 9vw;
+            }
+            #welcomeOverlay h2 {
+                font-size: 4.5vw;
+            }
+            #welcomeOverlay h3 {
+                font-size: 11vw;
+            }
+            #welcomeOverlay h4 {
+                font-size: 9vw;
+            }
+            #welcomeOverlay .button {
+                font-size: 6vw;
+            }
+            #welcomeOverlay p {
+                font-size: 4vw;
+            }
+            #welcomeOverlay .instagram {
+                font-size: 3.5vw;
+            }
+        }
+
+        .video-info {
+            background: #fff;
+            padding: 1rem;
+            margin-top: 1rem;
+            border-bottom: 1px solid #e0e0e0;
+        }
+
+        .video-info p {
+            font-size: 0.875rem;
+            color: #606060;
+            margin: 0.5rem 0 1.5rem 0;
+            line-height: 1.4;
+        }
+
+        .channel-info {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 0.75rem;
+        }
+
+        .channel-info img {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        .channel-name {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #0f0f0f;
+        }
+
+        .verified {
+            font-size: 0.75rem;
+            color: #606060;
+            background: #e0e0e0;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .video-info h3 {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #0f0f0f;
+            margin-bottom: 0.5rem;
+        }
+
+        .action-bar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .action-bar button {
+            background: none;
+            border: none;
+            font-size: 0.9rem;
+            color: #606060;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 0.3rem;
+        }
+
+        .action-bar button i {
+            font-size: 1.2rem;
+        }
+
+        .video-poster {
+            cursor: pointer;
+        }
+
+        .video-poster img {
+            display: block;
+            width: auto;
+            height: auto;
+            max-width: 100%;
+            background: #fff;
+            border: 1px solid #e0e0e0;
+            border-radius: 4px;
+        }
+
+        footer {
+            background: var(--footer-bg);
+            color: white;
+            padding: 2rem;
+            margin-top: auto;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section h4 {
+            color: var(--footer-accent);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background: var(--footer-accent);
+        }
+
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links a {
+            color: white;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--footer-accent);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: var(--footer-accent);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-bottom a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInItem {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes slideNavIn {
+            from { opacity: 0; transform: translateY(-20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 3rem;
+            }
+            .hero p {
+                font-size: 1.2rem;
+            }
+            .about-section {
+                grid-template-columns: 1fr;
+                gap: 1.5rem;
+                padding: 2rem 1rem;
+            }
+            .about-image img {
+                max-width: 340px;
+                max-height: 360px;
+                margin: 1rem auto 0;
+            }
+            .video-container {
+                grid-template-columns: 1fr;
+            }
+            .main-video {
+                max-width: 100%;
+            }
+            .video-poster {
+                margin-top: 1rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .navbar-container {
+                justify-content: space-between;
+            }
+
+            .logo {
+                position: static;
+                transform: none;
+                font-size: 1.2rem;
+            }
+
+            .nav-links-left,
+            .nav-links-right {
+                display: none;
+            }
+
+            .hamburger {
+                display: block;
+            }
+
+            .hero {
+                min-height: 60vh;
+                padding: 5rem 1rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .hero p {
+                font-size: 1rem;
+            }
+
+            .hero-img {
+                width: 120px;
+                height: 120px;
+            }
+
+            .about-text h2 {
+                font-size: 1.8rem;
+            }
+
+            .video-section {
+                padding: 2rem 1rem;
+            }
+
+            .video-info {
+                padding: 0.75rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .hero h1 {
+                font-size: 1.5rem;
+            }
+            .hero p {
+                font-size: 0.9rem;
+            }
+            .hero-img {
+                width: 100px;
+                height: 100px;
+            }
+            footer {
+                padding: 1.5rem 1rem;
+            }
+            .footer-section h4 {
+                font-size: 1.1rem;
+            }
+            .footer-section p {
+                font-size: 0.9rem;
+            }
+            .social-links a {
+                font-size: 1.3rem;
+            }
+            .logo {
+                font-size: 1rem;
+            }
+            .nav-menu a {
+                font-size: 1rem;
+                padding: 0.75rem;
+            }
+            .about-text h2 {
+                font-size: 1.5rem;
+            }
+            .about-text p {
+                font-size: 1rem;
+            }
+            .video-section h2 {
+                font-size: 1.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navbar-container">
+                <ul class="nav-links-left">
+                    <li style="--i: 1"><a href="timeline.html"><i class="fas fa-stream"></i> Timeline</a></li>
+                    <li style="--i: 2"><a href="anggota.html"><i class="fas fa-users"></i> Anggota</a></li>
+                </ul>
+                <a href="index.html" class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>ofc_9four</span>
+                </a>
+                <ul class="nav-links-right">
+                    <li style="--i: 3"><a href="gallery.html"><i class="fas fa-images"></i> Galeri</a></li>
+                    <li style="--i: 4"><a href="spotify.html"><i class="fas fa-music"></i> Spotify</a></li>
+                </ul>
+                <button class="hamburger" aria-label="Buka menu" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+        <ul class="nav-menu">
+            <li style="--i: 1"><a href="timeline.html"><i class="fas fa-stream"></i> Timeline</a></li>
+            <li style="--i: 2"><a href="anggota.html"><i class="fas fa-users"></i> Anggota</a></li>
+            <li style="--i: 3"><a href="gallery.html"><i class="fas fa-images"></i> Galeri</a></li>
+            <li style="--i: 4"><a href="spotify.html"><i class="fas fa-music"></i> Spotify</a></li>
+        </ul>
+    </header>
+    <section class="hero" style="background-image:none;">
+        <img alt="Background hero image showing a beautiful school campus with students of SMPN2 Tarumajaya in class 9D celebrating their farewell" height="1080" loading="lazy" src="/img/k.jpeg" style="position:absolute;top:0;left:0;width:100%;height:100%;object-fit:cover;z-index:0;" width="1920"/>
+        <div class="hero-content">
+            <img alt="Logo of class 9D, circular emblem with school colors and text" class="hero-img" height="150" loading="lazy" src="/img/logo.jpg" width="150"/>
+            <h1>Kelas 9D</h1>
+            <p>Perpisahan dengan perjalanan tak terlupakan di SMPN2 Tarumajaya</p>
+        </div>
+    </section>
+    <main class="content">
+        <section class="about-section">
+            <div class="about-text">
+                <h2>Tentang Perjalanan Kami</h2>
+                <p>Waktu kami di SMPN2 Tarumajaya penuh dengan tawa, pembelajaran, dan kenangan seumur hidup. Saat kami bersiap untuk berpisah, website ini menangkap esensi dari perjalanan kami bersama di Kelas 9D, merayakan persahabatan dan momen yang akan selalu bersama kami.</p>
+                <a class="about-button" href="gallery.html">Lihat Kenangan Kami</a>
+            </div>
+            <div class="about-image">
+                <img alt="Foto kenangan kelas 9D SMPN2 Tarumajaya, menampilkan siswa dan guru dalam momen kebersamaan" height="400" loading="lazy" src="/img/gallery3.jpg" width="380"/>
+            </div>
+        </section>
+    </main>
+    <section class="video-section">
+        <h2>Video Kami</h2>
+        <hr/>
+        <div class="video-container">
+            <div class="main-video">
+                <div id="welcomeOverlay">
+                    <div class="overlay"></div>
+                    <div class="content">
+                        <h1>MEMORIES</h1>
+                        <h2>A MEMORIES ORIGINAL SERIES</h2>
+                        <h3>THANKS TO</h3>
+                        <h4>2024-2025</h4>
+                        <button id="startButton" class="button">IX-D / 9four</button>
+                        <p>
+                            Satu tahun penuh kenangan di kelas 9four (2024-2025). Tawa, tangis, dan cerita tak terlupakan.<br>
+                            Bersama teman, kita belajar, bertumbuh, dan menciptakan ikatan yang abadi.<br>
+                            Semoga cerita ini menjadi bagian indah dalam perjalanan kita.<br>
+                            Terima kasih untuk satu tahun penuh kenangan.
+                        </p>
+                        <div class="dots">
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                            <div class="dot"></div>
+                        </div>
+                        <div class="instagram">instagram.com/ofc_9four</div>
+                    </div>
+                </div>
+                <video id="mainVideo" autoplay playsinline preload="auto">
+                    <source src="/img/video3.mp4" type="video/mp4"/>
+                    Browser Anda tidak mendukung tag video.
+                </video>
+                <div class="video-info">
+                    <div class="channel-info">
+                        <img alt="Logo Kelas 9D, circular emblem with school colors and text" height="40" loading="lazy" src="/img/logo.jpg" width="40"/>
+                        <span class="channel-name">Kelas 9D</span>
+                        <span class="verified">✓</span>
+                    </div>
+                    <h3>MOMEN PERTAMA BARENG BU MEVIE</h3>
+                    <p> buatnya susah banged :) ngumpulin anak anak ini buat pada ada disini astaga yaampun:)) susahnyaa.</p>
+                    <div class="action-bar">
+                        <button><i class="fas fa-thumbs-up"></i> 1K</button>
+                        <button><i class="fas fa-share"></i> 2K</button>
+                        <button><i class="fas fa-comment"></i> 1K</button>
+                    </div>
+                </div>
+            </div>
+            <div class="video-poster" onclick="nextVideo()">
+                <img alt="Thumbnail video berikutnya yang akan diputar" height="225" loading="lazy" src="/img/banner.png" width="400"/>
+            </div>
+        </div>
+    </section>
+   <footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>Official Website 9four</h4>
+            <p>Selamat datang di ofc_9four, tempat di mana kenangan indah kita bersama tetap hidup! Website ini dibuat sebagai wadah untuk mengabadikan momen-momen berharga selama kita menempuh perjalanan di SMPN2 TARUMAJAYA, khususnya di kelas 9D.</p>
+            <div class="social-links" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <a href="https://instagram.com/ofc_9four" aria-label="Instagram Official" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <span>|</span>
+                <a href="https://www.tiktok.com/doetartarumajayaofficial" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <span>|</span>
+                <a href="https://www.youtube.com/@DoetarTarumajaya" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <span>|</span>
+                <a href="https://facebook.com/DoetarTarumajaya" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <span>|</span>
+                <a href="https://www.instagram.com/doetartarumajaya" aria-label="Instagram Official" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        Made by <a href="https://dzarelportfolio.netlify.app/" target="_blank" rel="noopener noreferrer">DzarelDeveloper</a>
+    </div>
+</footer>
+
+    <script>
+        function toggleMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            const hamburger = document.querySelector('.hamburger');
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        document.querySelectorAll('.nav-links-left a, .nav-links-right a, .nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-menu').classList.remove('active');
+                document.querySelector('.hamburger').classList.remove('active');
+            });
+        });
+
+        const mainVideo = document.getElementById('mainVideo');
+        const videoInfo = document.querySelector('.video-info');
+        const welcomeOverlay = document.getElementById('welcomeOverlay');
+        const startButton = document.getElementById('startButton');
+        let currentVideoIndex = 0;
+
+        const videos = [
+            {
+                src: '/img/video3.mp4',
+                title: 'VIDEO PERTAMA BARENG BU MEVIE!',
+                description: 'buatnya susah banged :) ngumpulin anak anak ini buat pada ada disini astaga yaampun:)) susahnyaa.',
+                comments: [
+                    { user: 'Siswa A', text: 'Tak percaya ini berakhir! Video ini membawa kembali begitu banyak kenangan.', avatar: '/img/logo.jpg' },
+                    { user: 'Siswa B', text: 'Kelas terbaik! Terima kasih untuk video luar biasa ini.', avatar: '/img/logo.jpg' }
+                ]
+            },
+            {
+                src: '/img/video2.mp4',
+                title: 'SAY HI TO CAMERA 📸',
+                description: 'ei ei ei, abis foto ijazah nih masih pada rapih rapih!, ada yang abis potong rambut (sampe botak ada tuh kayanya), yang ciwi ciwi abis pada benerin krudung sama rambut, terus pinjem jepitan bulu mata biar makin OKE!!',
+                comments: [
+                    { user: 'Siswa A', text: 'Komentar1', avatar: '/img/logo.jpg' },
+                    { user: 'Siswa B', text: 'Komentar2', avatar: '/img/logo.jpg' }
+                ]
+            },
+            {
+                src: '/img/video7.mp4',
+                title: 'VELOCITY ON THE TOP🏅',
+                description: 'velocity ga pernah ngebosenin yaa!, velocity mana nih mau ratain trendnya (asiicc), PELOCITI JAYA JAYA JAYAA!!!',
+                comments: [
+                    { user: 'Siswa A', text: 'Komentar1', avatar: '/img/logo.jpg' },
+                    { user: 'Siswa B', text: 'Komentar2', avatar: '/img/logo.jpg' }
+                ]
+            },
+            {
+                src: '/img/video4.mp4',
+                title: 'Pajar sad boy',
+                description: 'NAH INI NIHH BIANGNYAAA SEMBILAN DE, yaampuns kalo ga bertingkah gabisa emang anaknya.. jadi jatohh kan..',
+                comments: [
+                    { user: 'Siswa A', text: 'Komentar1', avatar: '/img/logo.jpg' },
+                    { user: 'Siswa B', text: 'Komentar2', avatar: '/img/logo.jpg' }
+                ]
+            },
+            {
+                src: '/img/video5.mp4',
+                title: 'TREND AGAIN!!!',
+                description: 'trend mana lagi sih yang belum kita buat? (banyak sih yaa kayanya), HAHAHAHA aslinya bukan do you think i have forgotten nih padahal, sepanjang hari jadi jokes😭😭',
+                comments: [
+                    { user: 'Siswa A', text: 'Komentar1', avatar: '/img/logo.jpg' },
+                    { user: 'Siswa B', text: 'Komentar2', avatar: '/img/logo.jpg' }
+                ]
+            },
+            {
+                src: '/img/video6.mp4',
+                title: 'SURPRISE FOR BU MEVIE!',
+                description: 'HARI GURU!, hari ini repot banget waktu itu :)) bolak balik kantor buat ngeprank bu mevie, kirain gaakan berhasil TERNYATAA BOOM💥 kena dong…, and yap seperti divideo ledakannya gabisa diputer (delay dulu ya bang), (EI DONATNYA KENA LEDAKAN ITU)',
+                comments: [
+                    { user: 'Siswa A', text: 'Komentar1', avatar: '/img/logo.jpg' },
+                    { user: 'Siswa B', text: 'Komentar2', avatar: '/img/logo.jpg' }
+                ]
+            },
+            {
+                src: '/img/video10.mp4',
+                title: 'SLEEPY',
+                description: 'yap ini dia yang SUKA TIDUR di9D, bahkan ada gurupun selalu tidur…, menurut rumor sih ya… dia ini abis jagain bumi pas malem! jadi ga heran lah ya paginya gini',
+                comments: [
+                    { user: 'Siswa A', text: 'Komentar1', avatar: '/img/logo.jpg' },
+                    { user: 'Siswa B', text: 'Komentar2', avatar: '/img/logo.jpg' }
+                ]
+            },
+            {
+                src: '/img/video11.mp4',
+                title: 'MANJAT DULU GUYS',
+                description: 'GA PAHAM LAGI DEH INI SUKA BANGET MANJAT POHON MANGGA ATAU GA JAMBU, kadang suka dibagi bagiin (hasil manjat) jadi yaaa Alhamdulillah dapet pahala deh, EH EH EH ITU NGAPAIN JOGET JOGET',
+                comments: [
+                    { user: 'Siswa A', text: 'Komentar1', avatar: '/img/logo.jpg' },
+                    { user: 'Siswa B', text: 'Komentar2', avatar: '/img/logo.jpg' }
+                ]
+            },
+            {
+                src: '/img/video12.mp4',
+                title: 'VELOCITY BALI',
+                description: 'YEY VELOCITY (again), UDAH KALI KEBERAPA NGULANG INII (tebak biangnya guys), jam jam pulang itu emang paling best kalau tiktokkan!',
+                comments: [
+                    { user: 'Siswa A', text: 'Komentar1', avatar: '/img/logo.jpg' },
+                    { user: 'Siswa B', text: 'Komentar2', avatar: '/img/logo.jpg' }
+                ]
+            },
+            {
+                src: '/img/video13.mp4',
+                title: 'VELOCITY AGAIN',
+                description: 'yes. velocity. again. and. again. TAPI ASICC BANGET DEH INI TENG TENG TENG TENG TENG TENG JEDAG JEDER',
+                comments: [
+                    { user: 'Siswa A', text: 'Komentar1', avatar: '/img/logo.jpg' },
+                    { user: 'Siswa B', text: 'Komentar2', avatar: '/img/logo.jpg' }
+                ]
+            },
+            {
+                src: '/img/video14.mp4',
+                title: 'VELOGAIN (VELOCITY AGAIN)',
+                description: 'HEI INI VELOCITY KEBERAPA KALINYA?!?!?!? IYA DEH IYAA ASICC',
+                comments: [
+                    { user: 'Siswa A', text: 'Komentar1', avatar: '/img/logo.jpg' },
+                    { user: 'Siswa B', text: 'Komentar2', avatar: '/img/logo.jpg' }
+                ]
+            },
+            {
+                src: '/img/video15.mp4',
+                title: 'LOVE BU MEVIE🤍',
+                description: 'TERIMA KASIH IBU DO’A KAN KAMI SUKSES KAMI SAYANG IBU” kalimat yang awalnya malu malu ngucapinnya lama lama kebiasaan HAHAH, divideo ini kalimat “terima kasih ibu do’a kan kami sukses kami sayang ibu” ada dipelajaran terakhir bu Mevie😔, SEKALI LAGI TERIMA KASIH IBU DO’A KAN KAMI SUKSES KAMI SAYANG IBU🤍, ajarin kita lagi ya bu🤍.',
+                comments: [
+                    { user: 'Siswa A', text: 'Komentar1', avatar: '/img/logo.jpg' },
+                    { user: 'Siswa B', text: 'Komentar2', avatar: '/img/logo.jpg' }
+                ]
+            },
+            {
+                src: '/img/video8.mp4',
+                title: 'Velocity kesekian abad',
+                description: 'bur ubur ikan lele, pelositi selalu dihati le..',
+                comments: [
+                    { user: 'Siswa A', text: 'Komentar1', avatar: '/img/logo.jpg' },
+                    { user: 'Siswa B', text: 'Komentar2', avatar: '/img/logo.jpg' }
+                ]
+            },
+            {
+                src: '/img/video17.mp4',
+                title: 'PSAJ day 3',
+                description: 'INIII HARIINYAA BIKINNN DEG-DEGAN BANGETTTTT, kenapa deg-degan? KARENAAA HARII ITUU PSAJ EMTEKAAA (╥⁠⁞⁠ ⁠⁞⁠╥⁠)⁠..⁠ nggaa lengkapp ituu orang orangnyaaa pada leleet bangeett jalannya MCM SYIPUT.. (demi apa si dikit lagi lulus...)',
+                comments: [
+                    { user: 'Siswa A', text: 'Komentar1', avatar: '/img/logo.jpg' },
+                    { user: 'Siswa B', text: 'Komentar2', avatar: '/img/logo.jpg' }
+                ]
+            }
+        ];
+
+        async function playVideoWithRetry(maxRetries = 3, delay = 300) {
+            let retries = 0;
+            while (retries < maxRetries) {
+                try {
+                    await mainVideo.play();
+                    mainVideo.classList.add('playing');
+                    console.log('Video diputar dengan suara.');
+                    return true;
+                } catch (error) {
+                    console.error(`Gagal memutar video (percobaan ${retries + 1}):`, error);
+                    retries++;
+                    await new Promise(resolve => setTimeout(resolve, delay));
+                }
+            }
+            console.warn('Gagal memutar video setelah beberapa percobaan.');
+            return false;
+        }
+
+        function updateMainVideo(index) {
+            const video = videos[index];
+            mainVideo.src = video.src;
+            mainVideo.load();
+            mainVideo.currentTime = 0;
+            playVideoWithRetry();
+
+            videoInfo.innerHTML = `
+                <div class="channel-info">
+                    <img src="/img/logo.jpg" alt="Logo Kelas 9D, circular emblem with school colors and text" loading="lazy" />
+                    <span class="channel-name">Kelas 9D</span>
+                    <span class="verified">✓</span>
+                </div>
+                <h3>${video.title}</h3>
+                <p>${video.description}</p>
+                <div class="action-bar">
+                    <button><i class="fas fa-thumbs-up"></i> 1K</button>
+                    <button><i class="fas fa-share"></i> 2K</button>
+                    <button><i class="fas fa-comment"></i> 1K</button>
+                </div>
+            `;
+        }
+
+        function nextVideo() {
+            currentVideoIndex = (currentVideoIndex + 1) % videos.length;
+            updateMainVideo(currentVideoIndex);
+        }
+
+        function dismissOverlay() {
+            welcomeOverlay.style.display = 'none';
+            document.body.classList.remove('no-scroll');
+            updateMainVideo(currentVideoIndex);
+            playVideoWithRetry();
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            welcomeOverlay.style.display = 'flex';
+            startButton.focus();
+            document.body.classList.add('no-scroll');
+        });
+
+        startButton.addEventListener('click', (e) => {
+            e.preventDefault();
+            e.stopPropagation();
+            dismissOverlay();
+        });
+
+        welcomeOverlay.addEventListener('click', (e) => {
+            if (e.target === welcomeOverlay) {
+                dismissOverlay();
+            }
+        });
+
+        mainVideo.addEventListener('timeupdate', () => {
+            if (mainVideo.duration - mainVideo.currentTime < 1) {
+                nextVideo();
+            }
+        });
+
+        mainVideo.addEventListener('ended', () => {
+            nextVideo();
+        });
+    </script>
+</body>
+</html>

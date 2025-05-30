@@ -1,0 +1,1020 @@
+<html lang="en">
+ <head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>
+  Playlist IX-D
+  </title>
+  <script src="https://cdn.tailwindcss.com">
+  </script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+  <style>
+   @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap");
+    body {
+      font-family: "Inter", sans-serif;
+      margin: 0;
+      padding: 0;
+      height: 100vh;
+      background: linear-gradient(to bottom right, #f3f4f6, #e5e7eb);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    #app {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(to bottom, #1f2937, #111827);
+      color: white;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+    /* Hide scrollbar for Webkit */
+    .no-scrollbar::-webkit-scrollbar {
+      display: none;
+    }
+    /* Hide scrollbar for IE, Edge and Firefox */
+    .no-scrollbar {
+      -ms-overflow-style: none; /* IE and Edge */
+      scrollbar-width: none; /* Firefox */
+    }
+  </style>
+ </head>
+ <body>
+  <div class="w-full h-full rounded-none" id="app">
+   <!-- Music List Screen -->
+   <section class="absolute inset-0 bg-transparent px-6 pt-6 pb-24 overflow-y-auto no-scrollbar transition-transform duration-300 ease-in-out" id="music-list">
+    <!-- Album art and info -->
+    <div class="flex items-center mb-6 gap-4">
+     <div class="w-20 h-20 rounded-3xl overflow-hidden bg-white flex items-center justify-center flex-shrink-0">
+      <img alt="Logo music" class="w-full h-full object-cover" height="80" src="/img/logo.jpg" width="80"/>
+     </div>
+     <div class="flex flex-col">
+      <h1 class="text-2xl font-semibold leading-tight mb-1" style="letter-spacing: 0.25em;">
+       9Four
+      </h1>
+      <p class="text-gray-400 text-sm mb-2">
+       all music fav 9four
+      </p>
+      <div class="flex space-x-3 text-gray-400 text-lg">
+       <button aria-label="Add to playlist" class="hover:text-white">
+        <i class="fas fa-plus"></i>
+       </button>
+       <button aria-label="Share" class="hover:text-white">
+        <i class="fas fa-share-alt"></i>
+       </button>
+       <button aria-label="More options" class="hover:text-white">
+        <i class="fas fa-ellipsis-h"></i>
+       </button>
+      </div>
+     </div>
+    </div>
+    <!-- Play and Shuffle buttons -->
+    <div class="flex gap-4 mb-6">
+     <button class="flex-1 bg-white text-gray-900 rounded-xl py-2 font-semibold flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(255,255,255,0.7)] hover:brightness-110 transition" id="play-button">
+      <i class="fas fa-play"></i>
+      Play
+     </button>
+     <button class="flex-1 bg-gray-800 rounded-xl py-2 font-semibold flex items-center justify-center gap-2 hover:bg-gray-700 transition">
+      <i class="fas fa-random"></i>
+      Shuffle
+     </button>
+    </div>
+    <!-- Song list -->
+    <ul class="space-y-4 text-gray-400 text-sm font-medium">
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="0">
+      <div>
+       <span class="font-semibold text-white">01</span>
+       <span class="ml-2">Bunga Abadi</span>
+       <p class="text-xs text-gray-500 ml-7">Rio Clappy</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="1">
+      <div>
+       <span class="font-semibold text-white">02</span>
+       <span class="ml-2">Love</span>
+       <p class="text-xs text-gray-500 ml-7">Keyshia Cole</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="2">
+      <div>
+       <span class="font-semibold text-white">03</span>
+       <span class="ml-2">On Bended Knee</span>
+       <p class="text-xs text-gray-500 ml-7">Boyz II Men</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="3">
+      <div>
+       <span class="font-semibold text-white">04</span>
+       <span class="ml-2">W.H.U.T</span>
+       <p class="text-xs text-gray-500 ml-7">Aisha Retno</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="4">
+      <div>
+       <span class="font-semibold text-white">05</span>
+       <span class="ml-2">Best Part (feat. H.E.R.)</span>
+       <p class="text-xs text-gray-500 ml-7">Daniel Caesar, H.E.R.</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="5">
+      <div>
+       <span class="font-semibold text-white">06</span>
+       <span class="ml-2">The Boy Is Mine</span>
+       <p class="text-xs text-gray-500 ml-7">Brandy, Monica</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="6">
+      <div>
+       <span class="font-semibold text-white">07</span>
+       <span class="ml-2">Superpowers</span>
+       <p class="text-xs text-gray-500 ml-7">Daniel Caesar</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="7">
+      <div>
+       <span class="font-semibold text-white">08</span>
+       <span class="ml-2">intro (end of the world)</span>
+       <p class="text-xs text-gray-500 ml-7">Ariana Grande</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="8">
+      <div>
+       <span class="font-semibold text-white">09</span>
+       <span class="ml-2">Sleep Well</span>
+       <p class="text-xs text-gray-500 ml-7">d4vd</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="9">
+      <div>
+       <span class="font-semibold text-white">10</span>
+       <span class="ml-2">love</span>
+       <p class="text-xs text-gray-500 ml-7">wave to earth</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="10">
+      <div>
+       <span class="font-semibold text-white">11</span>
+       <span class="ml-2">Young And Beautiful</span>
+       <p class="text-xs text-gray-500 ml-7">Lana Del Rey</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="11">
+      <div>
+       <span class="font-semibold text-white">12</span>
+       <span class="ml-2">All Too Well (10 Minute Version) (Taylor's Version) (From the Vault)</span>
+       <p class="text-xs text-gray-500 ml-7">Taylor Swift</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="12">
+      <div>
+       <span class="font-semibold text-white">13</span>
+       <span class="ml-2">Back To December</span>
+       <p class="text-xs text-gray-500 ml-7">Taylor Swift</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="13">
+      <div>
+       <span class="font-semibold text-white">14</span>
+       <span class="ml-2">That Should Be Me</span>
+       <p class="text-xs text-gray-500 ml-7">Justin Bieber</p>
+      </div>
+      <button aria-label="MoreHISoptions" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="14">
+      <div>
+       <span class="font-semibold text-white">15</span>
+       <span class="ml-2">Seventeen</span>
+       <p class="text-xs text-gray-500 ml-7">JKT48</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="15">
+      <div>
+       <span class="font-semibold text-white">16</span>
+       <span class="ml-2">Lantas</span>
+       <p class="text-xs text-gray-500 ml-7">Juicy Luicy</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="16">
+      <div>
+       <span class="font-semibold text-white">17</span>
+       <span class="ml-2">Sialan</span>
+       <p class="text-xs text-gray-500 ml-7">Adrian Khalif, Juicy Luicy</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="17">
+      <div>
+       <span class="font-semibold text-white">18</span>
+       <span class="ml-2">BIRDS OF A FEATHER</span>
+       <p class="text-xs text-gray-500 ml-7">Billie Eilish</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="18">
+      <div>
+       <span class="font-semibold text-white">19</span>
+       <span class="ml-2">thank u, next</span>
+       <p class="text-xs text-gray-500 ml-7">Ariana Grande</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="19">
+      <div>
+       <span class="font-semibold text-white">20</span>
+       <span class="ml-2">bloodline</span>
+       <p class="text-xs text-gray-500 ml-7">Ariana Grande</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="20">
+      <div>
+       <span class="font-semibold text-white">21</span>
+       <span class="ml-2">Tunjukkan Cintamu</span>
+       <p class="text-xs text-gray-500 ml-7">Nosstress</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="21">
+      <div>
+       <span class="font-semibold text-white">22</span>
+       <span class="ml-2">I Wanna Be Yours</span>
+       <p class="text-xs text-gray-500 ml-7">Arctic Monkeys</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="22">
+      <div>
+       <span class="font-semibold text-white">23</span>
+       <span class="ml-2">Juragan Empang</span>
+       <p class="text-xs text-gray-500 ml-7">Nella Kharisma</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="23">
+      <div>
+       <span class="font-semibold text-white">24</span>
+       <span class="ml-2">Nabi Palsu</span>
+       <p class="text-xs text-gray-500 ml-7">Hindia</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="24">
+      <div>
+       <span class="font-semibold text-white">25</span>
+       <span class="ml-2">Membasuh</span>
+       <p class="text-xs text-gray-500 ml-7">Hindia, Rara Sekar</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="25">
+      <div>
+       <span class="font-semibold text-white">26</span>
+       <span class="ml-2">Versace on the Floor</span>
+       <p class="text-xs text-gray-500 ml-7">Bruno Mars</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="26">
+      <div>
+       <span class="font-semibold text-white">27</span>
+       <span class="ml-2">Mengenangmu</span>
+       <p class="text-xs text-gray-500 ml-7">Kerispatih</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="27">
+      <div>
+       <span class="font-semibold text-white">28</span>
+       <span class="ml-2">Dia Masa Lalumu, Aku Masa Depanmu</span>
+       <p class="text-xs text-gray-500 ml-7">Vionita</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="28">
+      <div>
+       <span class="font-semibold text-white">29</span>
+       <span class="ml-2">Sekuat Hatimu</span>
+       <p class="text-xs text-gray-500 ml-7">Last Child</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="29">
+      <div>
+       <span class="font-semibold text-white">30</span>
+       <span class="ml-2">Seluruh Nafas Ini</span>
+       <p class="text-xs text-gray-500 ml-7">Last Child, Gisel</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="30">
+      <div>
+       <span class="font-semibold text-white">31</span>
+       <span class="ml-2">Cincin</span>
+       <p class="text-xs text-gray-500 ml-7">Hindia</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="31">
+      <div>
+       <span class="font-semibold text-white">32</span>
+       <span class="ml-2">Guru Oemar Bakri</span>
+       <p class="text-xs text-gray-500 ml-7">Iwan Fals</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="32">
+      <div>
+       <span class="font-semibold text-white">33</span>
+       <span class="ml-2">Fake Plastic Trees</span>
+       <p class="text-xs text-gray-500 ml-7">Radiohead</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="33">
+      <div>
+       <span class="font-semibold text-white">34</span>
+       <span class="ml-2">Jealous</span>
+       <p class="text-xs text-gray-500 ml-7">Eyedress</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="34">
+      <div>
+       <span class="font-semibold text-white">35</span>
+       <span class="ml-2">Beetlebum</span>
+       <p class="text-xs text-gray-500 ml-7">Blur</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="35">
+      <div>
+       <span class="font-semibold text-white">36</span>
+       <span class="ml-2">Happiness</span>
+       <p class="text-xs text-gray-500 ml-7">Rex Orange County</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="36">
+      <div>
+       <span class="font-semibold text-white">37</span>
+       <span class="ml-2">Unknown Title</span>
+       <p class="text-xs text-gray-500 ml-7">Suara Kayu, Feby Putri</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="37">
+      <div>
+       <span class="font-semibold text-white">38</span>
+       <span class="ml-2">Bernafas Tanpamu</span>
+       <p class="text-xs text-gray-500 ml-7">Last Child</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="38">
+      <div>
+       <span class="font-semibold text-white">39</span>
+       <span class="ml-2">Right Now</span>
+       <p class="text-xs text-gray-500 ml-7">NewJeans</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="39">
+      <div>
+       <span class="font-semibold text-white">40</span>
+       <span class="ml-2">When You Believe - from The Prince of Egypt</span>
+       <p class="text-xs text-gray-500 ml-7">Whitney Houston, Mariah Carey</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+     <li class="flex justify-between items-center cursor-pointer hover:text-white" data-index="40">
+      <div>
+       <span class="font-semibold text-white">41</span>
+       <span class="ml-2">Penjaga Hati</span>
+       <p class="text-xs text-gray-500 ml-7">Noah</p>
+      </div>
+      <button aria-label="More options" class="text-gray-500 hover:text-white">
+       <i class="fas fa-ellipsis-h"></i>
+      </button>
+     </li>
+    </ul>
+   </section>
+   <!-- Now Playing Screen -->
+   <section class="absolute inset-0 flex flex-col px-6 pt-6 pb-8 transition-transform duration-300 ease-in-out translate-x-full" id="now-playing">
+    <!-- Header -->
+    <div class="flex justify-center mb-6 relative">
+     <button aria-label="Close" class="absolute left-0 top-0 text-gray-400 hover:text-white text-lg" id="close-now-playing">
+      <i class="fas fa-chevron-down"></i>
+     </button>
+     <span class="text-sm font-semibold">IX-D PLAYLIST</span>
+     <button aria-label="Playlist" class="absolute right-0 top-0 text-gray-400 text-lg">
+      <i class="fas fa-list-ul"></i>
+     </button>
+    </div>
+    <!-- Album art -->
+    <div class="mx-auto w-56 h-56 rounded-3xl overflow-hidden mb-6 bg-white flex items-center justify-center">
+     <img alt="Song cover" class="w-full h-full object-cover" height="224" id="now-playing-img" src="/music/music1.jpeg" width="224"/>
+    </div>
+    <!-- Song info -->
+    <div class="text-center mb-4">
+     <h2 class="font-semibold text-lg leading-6 mb-1" id="now-playing-title">Bunga Abadi</h2>
+     <p class="text-gray-400 text-sm" id="now-playing-artist">Rio Clappy</p>
+    </div>
+    <!-- Time and controls -->
+    <div class="flex justify-between text-xs text-gray-400 mb-6 px-2">
+     <span id="current-time">0:00</span>
+     <span id="duration">0:00</span>
+    </div>
+    <!-- Playback controls -->
+    <div class="flex justify-between items-center px-6">
+     <button aria-label="Shuffle" class="text-gray-400 hover:text-white text-lg">
+      <i class="fas fa-random"></i>
+     </button>
+     <button aria-label="Previous" class="text-gray-400 hover:text-white text-2xl" id="previous-btn">
+      <i class="fas fa-step-backward"></i>
+     </button>
+     <button aria-label="Play" class="bg-white text-gray-900 rounded-full w-14 h-14 flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.7)] hover:scale-105 transition-transform" id="play-pause-btn">
+      <i class="fas fa-play text-2xl pl-1"></i>
+     </button>
+     <button aria-label="Next" class="text-gray-400 hover:text-white text-2xl" id="next-btn">
+      <i class="fas fa-step-forward"></i>
+     </button>
+     <button aria-label="Repeat" class="text-gray-400 hover:text-white text-lg">
+      <i class="fas fa-redo"></i>
+     </button>
+    </div>
+   </section>
+   <!-- Bottom now playing bar -->
+   <div class="absolute bottom-20 left-6 right-6 bg-white rounded-3xl flex items-center gap-4 px-4 py-2 shadow-[0_0_20px_rgba(255,255,255,0.7)] cursor-pointer opacity-0 pointer-events-none transition-opacity duration-300" id="bottom-now-playing-bar">
+    <div class="w-12 h-12 rounded-3xl overflow-hidden flex-shrink-0">
+     <img alt="Song cover" class="w-full h-full object-cover" height="48" id="bottom-now-playing-img" src="/music/music1.jpeg" width="48"/>
+    </div>
+    <div class="flex flex-col flex-grow overflow-hidden">
+     <p class="font-semibold text-gray-900 truncate" id="bottom-song-title">Bunga Abadi</p>
+     <p class="text-xs text-gray-500 truncate" id="bottom-song-artist">Rio Clappy</p>
+    </div>
+    <button aria-label="Favorite" class="text-gray-400 hover:text-gray-700 text-lg">
+     <i class="far fa-heart"></i>
+    </button>
+    <button aria-label="Pause" class="bg-gray-900 text-white rounded-full w-10 h-10 flex items-center justify-center shadow-[0_0_10px_rgba(0,0,0,0.5)]" id="bottom-play-pause">
+     <i class="fas fa-pause"></i>
+    </button>
+   </div>
+   <!-- Audio element -->
+   <audio id="audio-player" preload="metadata">
+    <source src="/music/music1.mp3" type="audio/mpeg"/>
+    Your browser does not support the audio element.
+   </audio>
+  </div>
+  <script>
+   // Data for songs with mp3 URLs and images
+   const songs = [
+    {
+      title: "Bunga Abadi",
+      artist: "Rio Clappy",
+      index: 0,
+      src: "/music/music1.mp3",
+      img: "/music/music1.jpeg"
+    },
+    {
+      title: "Love",
+      artist: "Keyshia Cole",
+      index: 1,
+      src: "/music/music2.mp3",
+      img: "/music/music2.jpeg"
+    },
+    {
+      title: "On Bended Knee",
+      artist: "Boyz II Men",
+      index: 2,
+      src: "/music/music3.mp3",
+      img: "/music/music3.jpeg"
+    },
+    {
+      title: "W.H.U.T",
+      artist: "Aisha Retno",
+      index: 3,
+      src: "/music/music4.mp3",
+      img: "/music/music4.jpeg"
+    },
+    {
+      title: "Best Part (feat. H.E.R.)",
+      artist: "Daniel Caesar, H.E.R.",
+      index: 4,
+      src: "/music/music5.mp3",
+      img: "/music/music5.jpeg"
+    },
+    {
+      title: "The Boy Is Mine",
+      artist: "Brandy, Monica",
+      index: 5,
+      src: "/music/music6.mp3",
+      img: "/music/music6.jpeg"
+    },
+    {
+      title: "Superpowers",
+      artist: "Daniel Caesar",
+      index: 6,
+      src: "/music/music7.mp3",
+      img: "/music/music7.jpeg"
+    },
+    {
+      title: "intro (end of the world)",
+      artist: "Ariana Grande",
+      index: 7,
+      src: "/music/music8.mp3",
+      img: "/music/music8.jpeg"
+    },
+    {
+      title: "Sleep Well",
+      artist: "d4vd",
+      index: 8,
+      src: "/music/music9.mp3",
+      img: "/music/music9.jpeg"
+    },
+    {
+      title: "love",
+      artist: "wave to earth",
+      index: 9,
+      src: "/music/music10.mp3",
+      img: "/music/music10.jpeg"
+    },
+    {
+      title: "Young And Beautiful",
+      artist: "Lana Del Rey",
+      index: 10,
+      src: "/music/music11.mp3",
+      img: "/music/music11.jpeg"
+    },
+    {
+      title: "All Too Well (10 Minute Version) (Taylor's Version) (From the Vault)",
+      artist: "Taylor Swift",
+      index: 11,
+      src: "/music/music12.mp3",
+      img: "/music/music12.jpeg"
+    },
+    {
+      title: "Back To December",
+      artist: "Taylor Swift",
+      index: 12,
+      src: "/music/music13.mp3",
+      img: "/music/music13.jpeg"
+    },
+    {
+      title: "That Should Be Me",
+      artist: "Justin Bieber",
+      index: 13,
+      src: "/music/music14.mp3",
+      img: "/music/music14.jpeg"
+    },
+    {
+      title: "Seventeen",
+      artist: "JKT48",
+      index: 14,
+      src: "/music/music15.mp3",
+      img: "/music/music15.jpeg"
+    },
+    {
+      title: "Lantas",
+      artist: "Juicy Luicy",
+      index: 15,
+      src: "/music/music16.mp3",
+      img: "/music/music16.jpeg"
+    },
+    {
+      title: "Sialan",
+      artist: "Adrian Khalif, Juicy Luicy",
+      index: 16,
+      src: "/music/music17.mp3",
+      img: "/music/music17.jpeg"
+    },
+    {
+      title: "BIRDS OF A FEATHER",
+      artist: "Billie Eilish",
+      index: 17,
+      src: "/music/music18.mp3",
+      img: "/music/music18.jpeg"
+    },
+    {
+      title: "thank u, next",
+      artist: "Ariana Grande",
+      index: 18,
+      src: "/music/music19.mp3",
+      img: "/music/music19.jpeg"
+    },
+    {
+      title: "bloodline",
+      artist: "Ariana Grande",
+      index: 19,
+      src: "/music/music20.mp3",
+      img: "/music/music20.jpeg"
+    },
+    {
+      title: "Tunjukkan Cintamu",
+      artist: "Nosstress",
+      index: 20,
+      src: "/music/music21.mp3",
+      img: "/music/music21.jpeg"
+    },
+    {
+      title: "I Wanna Be Yours",
+      artist: "Arctic Monkeys",
+      index: 21,
+      src: "/music/music22.mp3",
+      img: "/music/music22.jpeg"
+    },
+    {
+      title: "Juragan Empang",
+      artist: "Nella Kharisma",
+      index: 22,
+      src: "/music/music23.mp3",
+      img: "/music/music23.jpeg"
+    },
+    {
+      title: "Nabi Palsu",
+      artist: "Hindia",
+      index: 23,
+      src: "/music/music24.mp3",
+      img: "/music/music24.jpeg"
+    },
+    {
+      title: "Membasuh",
+      artist: "Hindia, Rara Sekar",
+      index: 24,
+      src: "/music/music25.mp3",
+      img: "/music/music25.jpeg"
+    },
+    {
+      title: "Versace on the Floor",
+      artist: "Bruno Mars",
+      index: 25,
+      src: "/music/music26.mp3",
+      img: "/music/music26.jpeg"
+    },
+    {
+      title: "Mengenangmu",
+      artist: "Kerispatih",
+      index: 26,
+      src: "/music/music27.mp3",
+      img: "/music/music27.jpeg"
+    },
+    {
+      title: "Dia Masa Lalumu, Aku Masa Depanmu",
+      artist: "Vionita",
+      index: 27,
+      src: "/music/music28.mp3",
+      img: "/music/music28.jpeg"
+    },
+    {
+      title: "Sekuat Hatimu",
+      artist: "Last Child",
+      index: 28,
+      src: "/music/music29.mp3",
+      img: "/music/music29.jpeg"
+    },
+    {
+      title: "Seluruh Nafas Ini",
+      artist: "Last Child, Gisel",
+      index: 29,
+      src: "/music/music30.mp3",
+      img: "/music/music30.jpeg"
+    },
+    {
+      title: "Cincin",
+      artist: "Hindia",
+      index: 30,
+      src: "/music/music31.mp3",
+      img: "/music/music31.jpeg"
+    },
+    {
+      title: "Guru Oemar Bakri",
+      artist: "Iwan Fals",
+      index: 31,
+      src: "/music/music32.mp3",
+      img: "/music/music32.jpeg"
+    },
+    {
+      title: "Fake Plastic Trees",
+      artist: "Radiohead",
+      index: 32,
+      src: "/music/music33.mp3",
+      img: "/music/music33.jpeg"
+    },
+    {
+      title: "Jealous",
+      artist: "Eyedress",
+      index: 33,
+      src: "/music/music34.mp3",
+      img: "/music/music34.jpeg"
+    },
+    {
+      title: "Beetlebum",
+      artist: "Blur",
+      index: 34,
+      src: "/music/music35.mp3",
+      img: "/music/music35.jpeg"
+    },
+    {
+      title: "Happiness",
+      artist: "Rex Orange County",
+      index: 35,
+      src: "/music/music36.mp3",
+      img: "/music/music36.jpeg"
+    },
+    {
+      title: "Unknown Title",
+      artist: "Suara Kayu, Feby Putri",
+      index: 36,
+      src: "/music/music37.mp3",
+      img: "/music/music37.jpeg"
+    },
+    {
+      title: "Bernafas Tanpamu",
+      artist: "Last Child",
+      index: 37,
+      src: "/music/music38.mp3",
+      img: "/music/music38.jpeg"
+    },
+    {
+      title: "Right Now",
+      artist: "NewJeans",
+      index: 38,
+      src: "/music/music39.mp3",
+      img: "/music/music39.jpeg"
+    },
+    {
+      title: "When You Believe - from The Prince of Egypt",
+      artist: "Whitney Houston, Mariah Carey",
+      index: 39,
+      src: "/music/music40.mp3",
+      img: "/music/music40.jpeg"
+    },
+    {
+      title: "Penjaga Hati",
+      artist: "Noah",
+      index: 40,
+      src: "/music/music41.mp3",
+      img: "/music/music41.jpeg"
+    }
+   ];
+
+   // Elements
+   const musicListSection = document.getElementById("music-list");
+   const nowPlayingSection = document.getElementById("now-playing");
+   const bottomNowPlayingBar = document.getElementById("bottom-now-playing-bar");
+   const playButton = document.getElementById("play-button");
+   const closeNowPlayingBtn = document.getElementById("close-now-playing");
+   const playPauseBtn = document.getElementById("play-pause-btn");
+   const bottomPlayPauseBtn = document.getElementById("bottom-play-pause");
+   const previousBtn = document.getElementById("previous-btn");
+   const nextBtn = document.getElementById("next-btn");
+   const audioPlayer = document.getElementById("audio-player");
+
+   const nowPlayingTitle = document.getElementById("now-playing-title");
+   const nowPlayingArtist = document.getElementById("now-playing-artist");
+   const nowPlayingImg = document.getElementById("now-playing-img");
+   const bottomSongTitle = document.getElementById("bottom-song-title");
+   const bottomSongArtist = document.getElementById("bottom-song-artist");
+   const bottomNowPlayingImg = document.getElementById("bottom-now-playing-img");
+   const currentTimeEl = document.getElementById("current-time");
+   const durationEl = document.getElementById("duration");
+
+   // State
+   let currentSongIndex = 0;
+   let isPlaying = false;
+
+   // Format seconds to mm:ss
+   function formatTime(seconds) {
+    const m = Math.floor(seconds / 60);
+    const s = Math.floor(seconds % 60);
+    return `${m}:${s.toString().padStart(2, "0")}`;
+   }
+
+   // Update UI for current song
+   function updateNowPlayingUI() {
+    const song = songs[currentSongIndex];
+    nowPlayingTitle.textContent = song.title;
+    nowPlayingArtist.textContent = song.artist;
+    nowPlayingImg.src = song.img;
+    bottomSongTitle.textContent = song.title;
+    bottomSongArtist.textContent = song.artist;
+    bottomNowPlayingImg.src = song.img;
+    durationEl.textContent = "0:00";
+    audioPlayer.src = song.src;
+    audioPlayer.load();
+   }
+
+   // Show now playing screen
+   function showNowPlaying() {
+    musicListSection.style.transform = "translateX(-100%)";
+    nowPlayingSection.style.transform = "translateX(0)";
+    isPlaying = true;
+    bottomNowPlayingBar.classList.remove("opacity-0", "pointer-events-none");
+    updatePlayPauseIcon(true);
+    audioPlayer.play();
+   }
+
+   // Hide now playing screen
+   function hideNowPlaying() {
+    musicListSection.style.transform = "translateX(0)";
+    nowPlayingSection.style.transform = "translateX(100%)";
+    bottomNowPlayingBar.classList.remove("opacity-0", "pointer-events-none");
+    isPlaying = true;
+    updatePlayPauseIcon(true);
+    audioPlayer.play();
+   }
+
+   // Update play/pause icons
+   function updatePlayPauseIcon(playing) {
+    if (playing) {
+     playPauseBtn.innerHTML = '<i class="fas fa-pause text-2xl pl-1"></i>';
+     bottomPlayPauseBtn.innerHTML = '<i class="fas fa-pause"></i>';
+    } else {
+     playPauseBtn.innerHTML = '<i class="fas fa-play text-2xl pl-1"></i>';
+     bottomPlayPauseBtn.innerHTML = '<i class="fas fa-play"></i>';
+    }
+   }
+
+   // Play selected song and show now playing screen
+   function playSong(index) {
+    currentSongIndex = index;
+    updateNowPlayingUI();
+    showNowPlaying();
+   }
+
+   // Toggle play/pause
+   function togglePlayPause() {
+    if (audioPlayer.paused) {
+     audioPlayer.play();
+     isPlaying = true;
+    } else {
+     audioPlayer.pause();
+     isPlaying = false;
+    }
+    updatePlayPauseIcon(isPlaying);
+   }
+
+   // Play previous song
+   function playPreviousSong() {
+    currentSongIndex = (currentSongIndex - 1 + songs.length) % songs.length;
+    updateNowPlayingUI();
+    if (isPlaying) {
+     audioPlayer.play();
+    }
+   }
+
+   // Play next song
+   function playNextSong() {
+    currentSongIndex = (currentSongIndex + 1) % songs.length;
+    updateNowPlayingUI();
+    if (isPlaying) {
+     audioPlayer.play();
+    }
+   }
+
+   // Update current time display
+   audioPlayer.addEventListener("timeupdate", () => {
+    currentTimeEl.textContent = formatTime(audioPlayer.currentTime);
+   });
+
+   // Update duration display when metadata loaded
+   audioPlayer.addEventListener("loadedmetadata", () => {
+    durationEl.textContent = formatTime(audioPlayer.duration);
+   });
+
+   // Event listeners
+   playButton.addEventListener("click", () => {
+    playSong(currentSongIndex);
+   });
+
+   closeNowPlayingBtn.addEventListener("click", () => {
+    hideNowPlaying();
+    bottomNowPlayingBar.classList.remove("opacity-0", "pointer-events-none");
+   });
+
+   bottomNowPlayingBar.addEventListener("click", () => {
+    showNowPlaying();
+   });
+
+   playPauseBtn.addEventListener("click", togglePlayPause);
+   bottomPlayPauseBtn.addEventListener("click", (e) => {
+    e.stopPropagation();
+    togglePlayPause();
+   });
+
+   previousBtn.addEventListener("click", playPreviousSong);
+   nextBtn.addEventListener("click", playNextSong);
+
+   // Add click listeners to song list items
+   document.querySelectorAll("#music-list ul li").forEach((li) => {
+    li.addEventListener("click", () => {
+     const index = parseInt(li.getAttribute("data-index"));
+     playSong(index);
+    });
+   });
+
+   // Initialize UI
+   updateNowPlayingUI();
+   musicListSection.style.transform = "translateX(0)";
+   nowPlayingSection.style.transform = "translateX(100%)";
+   bottomNowPlayingBar.classList.add("opacity-0", "pointer-events-none");
+  </script>
+ </body>
+</html>

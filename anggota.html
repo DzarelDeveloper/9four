@@ -1,0 +1,826 @@
+<!DOCTYPE html>
+<html class="scroll-smooth" lang="id">
+<head>
+  <meta charset="utf-8"/>
+  <meta content="width=device-width, initial-scale=1" name="viewport"/>
+  <title>Anggota - 9four</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    :root {
+      --bg-color: #1a202c;
+      --text-color: #e2e8f0;
+      --card-bg: #2d3748;
+      --accent-color: #ff6f91;
+      --nav-bg: rgba(0, 0, 0, 0.6);
+      --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+      --transition: all 0.3s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Poppins', sans-serif;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      line-height: 1.6;
+      padding-top: 60px;
+    }
+
+    /* Header Styles */
+    header {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      background: var(--nav-bg);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      z-index: 1000;
+      animation: slideDown 0.8s ease-out;
+    }
+
+    .navbar {
+      max-width: 1440px;
+      margin: 0 auto;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .navbar-container {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+      max-width: 1440px;
+    }
+
+    .logo {
+      font-size: 1.5rem;
+      font-weight: 700;
+      color: white;
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      text-decoration: none;
+      transition: var(--transition);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      position: absolute;
+      left: 50%;
+      transform: translateX(-50%);
+    }
+
+    .logo:hover {
+      color: var(--accent-color);
+    }
+
+    .nav-links-left,
+    .nav-links-right {
+      display: flex;
+      gap: 1.5rem;
+      list-style: none;
+      align-items: center;
+    }
+
+    .nav-links-left li,
+    .nav-links-right li {
+      opacity: 0;
+      animation: fadeIn 0.5s ease forwards;
+      animation-delay: calc(0.2s * var(--i));
+    }
+
+    .nav-links-left a,
+    .nav-links-right a {
+      text-decoration: none;
+      color: white;
+      padding: 0.5rem 0.75rem;
+      border-radius: 6px;
+      transition: var(--transition);
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .nav-links-left a:hover,
+    .nav-links-right a:hover {
+      color: var(--accent-color);
+    }
+
+    .hamburger {
+      display: none;
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      color: white;
+      cursor: pointer;
+      padding: 0.5rem;
+      z-index: 1001;
+    }
+
+    .hamburger span {
+      display: block;
+      width: 26px;
+      height: 3px;
+      background: white;
+      margin: 5px 0;
+      border-radius: 2px;
+      transition: var(--transition);
+      transform-origin: center;
+    }
+
+    .hamburger.active span:nth-child(1) {
+      transform: translateY(8px) rotate(45deg);
+      width: 26px;
+    }
+
+    .hamburger.active span:nth-child(2) {
+      opacity: 0;
+      transform: scale(0);
+    }
+
+    .hamburger.active span:nth-child(3) {
+      transform: translateY(-8px) rotate(-45deg);
+      width: 26px;
+    }
+
+    .nav-menu {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      width: 100%;
+      background: rgba(0, 0, 0, 0.8);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      padding: 2rem;
+      flex-direction: column;
+      box-shadow: var(--shadow);
+      transform: translateY(-20px);
+      opacity: 0;
+      transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.4s ease;
+      z-index: 1001;
+      justify-content: center;
+      align-items: center;
+      min-height: 300px;
+      list-style: none;
+      pointer-events: none;
+      display: none;
+    }
+
+    .nav-menu.active {
+      display: flex;
+      transform: translateY(0);
+      opacity: 1;
+      animation: slideNavIn 0.4s ease forwards;
+      pointer-events: auto;
+    }
+
+    .nav-menu li {
+      width: 100%;
+      text-align: center;
+      margin: 1rem 0;
+      opacity: 0;
+      animation: fadeInItem 0.3s ease forwards;
+      animation-delay: calc(0.1s * var(--i));
+    }
+
+    .nav-menu a {
+      font-size: 1.2rem;
+      padding: 0.75rem 1rem;
+      display: block;
+      color: white;
+      text-decoration: none;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .nav-menu a:hover,
+    .nav-menu a:active {
+      background: #000000;
+      color: white;
+      border-radius: 8px;
+    }
+
+    /* Scrollbar for card container */
+    .card-container::-webkit-scrollbar {
+      height: 6px;
+    }
+    .card-container::-webkit-scrollbar-track {
+      background: transparent;
+    }
+    .card-container::-webkit-scrollbar-thumb {
+      background-color: #63b3ed;
+      border-radius: 10px;
+    }
+
+    /* Filter Menu Styles */
+    .filter-btn {
+      transition: var(--transition);
+    }
+    .filter-btn.active {
+      background-color: #38b2ac;
+      color: white;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Profile Card Styles */
+    .profile-card {
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+    .profile-card:hover {
+      transform: scale(1.03);
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Animations */
+    @keyframes slideDown {
+      from { transform: translateY(-100%); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes fadeInItem {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    @keyframes slideNavIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+      .navbar-container { justify-content: space-between; }
+      .logo { position: static; transform: none; font-size: 1.2rem; }
+      .nav-links-left, .nav-links-right { display: none; }
+      .hamburger { display: block; }
+      .filter-btn { padding: 0.5rem 1rem; font-size: 0.85rem; }
+    }
+
+    @media (max-width: 480px) {
+      .logo { font-size: 1rem; }
+      .nav-menu a { font-size: 1rem; padding: 0.75rem; }
+      .filter-btn { padding: 0.5rem 0.75rem; font-size: 0.8rem; }
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-gray-200">
+  <!-- Navbar -->
+  <header>
+    <nav class="navbar">
+      <div class="navbar-container">
+        <ul class="nav-links-left">
+          <li style="--i: 1"><a href="timeline.html"><i class="fas fa-stream"></i> Timeline</a></li>
+          <li style="--i: 2"><a href="anggota.html"><i class="fas fa-users"></i> Anggota</a></li>
+        </ul>
+        <a href="index.html" class="logo">
+          <i class="fas fa-graduation-cap"></i>
+          <span>ofc_9four</span>
+        </a>
+        <ul class="nav-links-right">
+          <li style="--i: 3"><a href="gallery.html"><i class="fas fa-images"></i> Galeri</a></li>
+          <li style="--i: 4"><a href="spotify.html"><i class="fas fa-music"></i> Spotify</a></li>
+        </ul>
+        <button class="hamburger" aria-label="Buka menu" onclick="toggleMenu()">
+          <span></span>
+          <span></span>
+          <span></span>
+        </button>
+      </div>
+    </nav>
+    <ul class="nav-menu">
+      <li style="--i: 1"><a href="timeline.html"><i class="fas fa-stream"></i> Timeline</a></li>
+      <li style="--i: 2"><a href="anggota.html"><i class="fas fa-users"></i> Anggota</a></li>
+      <li style="--i: 3"><a href="gallery.html"><i class="fas fa-images"></i> Galeri</a></li>
+      <li style="--i: 4"><a href="spotify.html"><i class="fas fa-music"></i> Spotify</a></li>
+    </ul>
+  </header>
+
+  <!-- Filter Menu -->
+  <div class="fixed top-[80px] w-full bg-gray-800/90 backdrop-blur-md flex justify-center gap-4 px-6 py-3 z-40 shadow-lg rounded-b-md max-w-7xl mx-auto left-1/2 -translate-x-1/2">
+    <button class="filter-btn active uppercase text-sm font-semibold tracking-wide px-5 py-2 rounded-full border-2 border-teal-400 text-teal-400 hover:bg-teal-500 hover:text-white transition shadow-md" data-filter="semua">
+      Semua
+    </button>
+    <button class="filter-btn uppercase text-sm font-semibold tracking-wide px-5 py-2 rounded-full border-2 border-teal-400 text-teal-400 hover:bg-teal-500 hover:text-white transition shadow-md" data-filter="prestasi">
+      Prestasi
+    </button>
+    <button class="filter-btn uppercase text-sm font-semibold tracking-wide px-5 py-2 rounded-full border-2 border-teal-400 text-teal-400 hover:bg-teal-500 hover:text-white transition shadow-md" data-filter="struktur">
+      Struktur
+    </button>
+  </div>
+
+  <!-- Semua Anggota -->
+  <section class="card-container active max-w-7xl mx-auto mt-28 px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 opacity-0 animate-fadeIn" id="semua">
+    <article class="profile-card wali-kelas relative bg-gradient-to-b from-sky-300 to-sky-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-pink-300"></div>
+      <img alt="Portrait photo of Bu Mevie, Wali Kelas and Guru Ilmu Pengetahuan Sosial, female teacher with warm smile, medium length hair, wearing formal attire" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Bu Mevie</h3>
+      <p class="role-text font-semibold text-pink-700 uppercase tracking-wide">Wali Kelas</p>
+      <p class="text-sm text-gray-700 mt-1">Guru Ilmu Pengetahuan Sosial</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Ahmad Rafli, male student, Angkatan 2024/2025, short black hair, casual school uniform" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/l.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Ahmad Rafli</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="#" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Aisya Nanda Audina</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card bendahara relative bg-gradient-to-b from-purple-300 to-purple-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-purple-300"></div>
+      <img alt="Portrait photo of Alya Putri Adhana Dinata, female student, Bendahara, Angkatan 2024/2025, long black hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Alya Putri Adhana Dinata</h3>
+      <p class="role-text font-semibold text-purple-700 uppercase tracking-wide">Bendahara</p>
+      <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card wakil relative bg-gradient-to-b from-yellow-300 to-yellow-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-yellow-300"></div>
+      <img alt="Portrait photo of Anastasya Safana Putri, female student, Wakil Ketua Kelas, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Anastasya Safana Putri</h3>
+      <p class="role-text font-semibold text-yellow-700 uppercase tracking-wide">Wakil Ketua Kelas</p>
+      <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Arraffi Nur Sidik, male student, Angkatan 2024/2025, short hair, casual school uniform" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/l.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Arraffi Nur Sidik</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card upacara relative bg-gradient-to-b from-yellow-200 to-yellow-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-yellow-300"></div>
+      <img alt="Portrait photo of Avianni Navara, female student, S. Upacara, Angkatan 2024/2025, long hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Avianni Navara</h3>
+      <p class="role-text font-semibold text-yellow-700 uppercase tracking-wide">S. Upacara</p>
+      <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Dinda Cahya Rahmadani, female student, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Dinda Cahya Ramadani</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card bendahara relative bg-gradient-to-b from-purple-300 to-purple-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-purple-300"></div>
+      <img alt="Portrait photo of Elisa Dinda Gouw Tama, female student, Bendahara, Angkatan 2024/2025, long hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Elisa Dinda Gouw Tama</h3>
+      <p class="role-text font-semibold text-purple-700 uppercase tracking-wide">Bendahara</p>
+      <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Fahri Rizky, male student, Angkatan 2024/2025, short hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/l.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Fahri Rizky</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Gabriel Slamet Sinaga, male student, Angkatan 2024/2025, short hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/l.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Gabriel Slamet Sinaga</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Iftinan Hurunnin Kahla, female student, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Iftinan Hurunn In Kahla</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Ilham Ramadhan, male student, Angkatan 2024/2025, short hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/l.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Ilham Ramadhan</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Irwan Wirsanjaya, male student, Angkatan 2024/2025, short hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/l.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Irwan Wirsanjaya</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Kesya Putri Cahyani, female student, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Kesya Putri Cahyani</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card keagamaan relative bg-gradient-to-b from-cyan-300 to-cyan-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-cyan-300"></div>
+      <img alt="Portrait photo of Liliyani, female student, S. Keagamaan, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Liliyani</h3>
+      <p class="role-text font-semibold text-cyan-700 uppercase tracking-wide">S. Keagamaan</p>
+      <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+    <img alt="Portrait photo of M. Hafidz Azwan, male student, Angkatan 2024/2025, short hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/l.jpg" width="100"/>
+    <h3 class="mt-2 text-xl font-semibold">M. Hafidz Azwan</h3>
+    <p class="text-sm mt-1">Angkatan 2024/2025</p>
+    <div class="social-links mt-3 flex space-x-4"></div>
+  </article>
+    <article class="profile-card sekretaris relative bg-gradient-to-b from-green-300 to-green-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-green-300"></div>
+      <img alt="Portrait photo of Miftahul Zannah, female student, Sekretaris, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Miftahul Zannah</h3>
+      <p class="role-text font-semibold text-green-700 uppercase tracking-wide">Sekretaris</p>
+      <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Muhamad Dannu, male student, Angkatan 2024/2025, short hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/l.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Muhamad Dannu</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Muhamad Reno Aji, male student, Angkatan 2024/2025, short hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/l.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Muhamad Reno Aji</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Muhammad Baihaqi Hidayat, male student, Angkatan 2024/2025, short hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/l.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Muhammad Baihaqi Hidayat</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Muhammad Fajar Darsono, male student, Angkatan 2024/2025, short hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/l.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Muhammad Fajar Darsono</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Muhamad Raffa Saputra, male student, Angkatan 2024/2025, short hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/l.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Muhamad Raffa Saputra</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card sekretaris relative bg-gradient-to-b from-green-300 to-green-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-green-300"></div>
+      <img alt="Portrait photo of Natasya Putri Agustin, female student, Sekretaris, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Natasya Putri Agustin</h3>
+      <p class="role-text font-semibold text-green-700 uppercase tracking-wide">Sekretaris</p>
+      <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Nayla Yuniawati Putri, female student, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Nayla Yuniawati Putri</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Putra Wijaya, male student, Angkatan 2024/2025, short hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/l.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Putra Wijaya</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Radisti Amelia Putri, female student, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Radisti Amelia Putri</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Rajni Ayu Kirana, female student, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Rajni Ayu Kirana</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Restu Akbar, male student, Angkatan 2024/2025, short hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/l.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Restu Akbar</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Rizky Saputra, male student, Angkatan 2024/2025, short hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/l.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Rizky Saputra</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Safitri, female student, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Safitri</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Salsa Nabila, female student, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Salsa Nabila</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Sifa Intan Sevia, female student, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Sifa Intan Sevia</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Tegar Bintang Ramadhan, male student, Angkatan 2024/2025, short hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/l.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Tegar Bintang Ramadhan</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card ketua relative bg-gradient-to-b from-sky-300 to-sky-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-sky-300"></div>
+      <img alt="Portrait photo of Yashinta Dorothea Wada, female student, Ketua Kelas, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Yashinta Dorothea Wada</h3>
+      <p class="role-text font-semibold text-sky-700 uppercase tracking-wide">Ketua Kelas</p>
+      <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Zahra Tusshyfa, female student, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Zahra Tusshyfa</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Aditya Ranu Setyawan, male student, Angkatan 2024/2025, short hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/l.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Aditya Ranu Setyawan</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Aditya Setiawan, male student, Angkatan 2024/2025, short hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/l.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Aditya Setiawan</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <img alt="Portrait photo of Ahmad Syaufie, male student, Angkatan 2024/2025, short hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10" height="100" src="img/l.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Ahmad Syaufie</h3>
+      <p class="text-sm mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card skebersihan relative bg-gradient-to-b from-purple-300 to-purple-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-purple-300"></div>
+      <img alt="Portrait photo of Almira Diah Pramesthi, female student, S. Kebersihan, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Almira Diah Pramesthi</h3>
+      <p class="role-text font-semibold text-purple-700 uppercase tracking-wide">S. Kebersihan</p>
+      <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+    <article class="profile-card keamanan relative bg-gradient-to-b from-pink-300 to-pink-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+      <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-pink-300"></div>
+      <img alt="Portrait photo of Alvian Rakha Dwi Prakoso, male student, S. Keamanan, Angkatan 2024/2025, short hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/l.jpg" width="100"/>
+      <h3 class="mt-2 text-xl font-semibold">Alvian Rakha Dwi Prakoso</h3>
+      <p class="role-text font-semibold text-pink-700 uppercase tracking-wide">S. Keamanan</p>
+      <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+      <div class="social-links mt-3 flex space-x-4"></div>
+    </article>
+  </section>
+
+  <!-- Berprestasi -->
+<section class="card-container max-w-7xl mx-auto mt-28 px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 hidden" id="prestasi">
+  <article class="prestasi-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+    <img alt="#" class="w-full h-48 object-cover rounded-t-2xl" height="200" src="img/natasya.jpg" width="400"/>
+    <h3 class="mt-4 text-xl font-semibold text-white relative after:absolute after:-bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-12 after:h-0.5 after:bg-green-500">Natasya Putri Agustin</h3>
+    <p class="text-sm text-gray-400 mt-1">Aktif Dalam Eskul Paskibra</p>
+    <div class="prestasi-stars text-yellow-400 text-xl mt-3">
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+    </div>
+    <div class="social-links mt-3 flex space-x-4"></div>
+  </article>
+  <article class="prestasi-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+    <img alt="#" class="w-full h-48 object-cover rounded-t-2xl" height="200" src="img/reno.jpg" width="400"/>
+    <h3 class="mt-4 text-xl font-semibold text-white relative after:absolute after:-bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-12 after:h-0.5 after:bg-green-500">Muhamad Reno Aji</h3>
+    <p class="text-sm text-gray-400 mt-1">Aktif Dalam Eskul Bola</p>
+    <div class="prestasi-stars text-yellow-400 text-xl mt-3">
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+    </div>
+    <div class="social-links mt-3 flex space-x-4"></div>
+  </article>
+  <article class="prestasi-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+    <img alt="#" class="w-full h-48 object-cover rounded-t-2xl" height="200" src="img/elisa.jpeg" width="400"/>
+    <h3 class="mt-4 text-xl font-semibold text-white relative after:absolute after:-bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-12 after:h-0.5 after:bg-green-500">Elisa Dinda Gouw Tama</h3>
+    <p class="text-sm text-gray-400 mt-1">Aktif Dalam Eskul Paskibra</p>
+    <div class="prestasi-stars text-yellow-400 text-xl mt-3">
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+    </div>
+    <div class="social-links mt-3 flex space-x-4"></div>
+  </article>
+  <article class="prestasi-card relative bg-gray-800 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-200 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+    <img alt="#" class="w-full h-48 object-cover rounded-t-2xl" height="200" src="img/azwan.jpeg" width="400"/>
+    <h3 class="mt-4 text-xl font-semibold text-white relative after:absolute after:-bottom-1 after:left-1/2 after:-translate-x-1/2 after:w-12 after:h-0.5 after:bg-green-500">M. Hafidz Azwan</h3>
+    <p class="text-sm text-gray-400 mt-1">Aktif Dalam Eskul Pramuka</p>
+    <div class="prestasi-stars text-yellow-400 text-xl mt-3">
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+      <i class="fas fa-star"></i>
+    </div>
+    <div class="social-links mt-3 flex space-x-4"></div>
+  </article>
+</section>
+
+  <!-- Struktur Kelas -->
+<section class="card-container max-w-7xl mx-auto mt-28 px-6 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 hidden" id="struktur">
+  <article class="profile-card wali-kelas relative bg-gradient-to-b from-pink-300 to-pink-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+    <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-pink-300"></div>
+    <img alt="Portrait photo of Bu Mevie, Wali Kelas and Guru Ilmu Pengetahuan Sosial, female teacher with warm smile, medium length hair, wearing formal attire" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+    <h3 class="mt-2 text-xl font-semibold">Bu Mevie</h3>
+    <p class="role-text font-semibold text-pink-700 uppercase tracking-wide">Wali Kelas</p>
+    <p class="text-sm text-gray-700 mt-1">Guru Ilmu Pengetahuan Sosial</p>
+    <div class="social-links mt-3 flex space-x-4"></div>
+  </article>
+  <article class="profile-card ketua relative bg-gradient-to-b from-sky-300 to-sky-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+    <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-sky-300"></div>
+    <img alt="Portrait photo of Yashinta Dorothea Wada, female student, Ketua Kelas, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+    <h3 class="mt-2 text-xl font-semibold">Yashinta Dorothea Wada</h3>
+    <p class="role-text font-semibold text-sky-700 uppercase tracking-wide">Ketua Kelas</p>
+    <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+    <div class="social-links mt-3 flex space-x-4"></div>
+  </article>
+  <article class="profile-card wakil relative bg-gradient-to-b from-yellow-300 to-yellow-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+    <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-yellow-300"></div>
+    <img alt="Portrait photo of Anastasya Safana Putri, female student, Wakil Ketua Kelas, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+    <h3 class="mt-2 text-xl font-semibold">Anastasya Safana Putri</h3>
+    <p class="role-text font-semibold text-yellow-700 uppercase tracking-wide">Wakil Ketua Kelas</p>
+    <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+    <div class="social-links mt-3 flex space-x-4"></div>
+  </article>
+  <article class="profile-card sekretaris relative bg-gradient-to-b from-green-300 to-green-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+    <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-green-300"></div>
+    <img alt="Portrait photo of Natasya Putri Agustin, female student, Sekretaris, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+    <h3 class="mt-2 text-xl font-semibold">Natasya Putri Agustin</h3>
+    <p class="role-text font-semibold text-green-700 uppercase tracking-wide">Sekretaris</p>
+    <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+    <div class="social-links mt-3 flex space-x-4"></div>
+  </article>
+  <article class="profile-card sekretaris relative bg-gradient-to-b from-green-300 to-green-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+    <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-green-300"></div>
+    <img alt="Portrait photo of Miftahul Zannah, female student, Sekretaris, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+    <h3 class="mt-2 text-xl font-semibold">Miftahul Zannah</h3>
+    <p class="role-text font-semibold text-green-700 uppercase tracking-wide">Sekretaris</p>
+    <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+    <div class="social-links mt-3 flex space-x-4"></div>
+  </article>
+  <article class="profile-card bendahara relative bg-gradient-to-b from-purple-300 to-purple-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+    <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-purple-300"></div>
+    <img alt="Portrait photo of Elisa Dinda Gouw Tama, female student, Bendahara, Angkatan 2024/2025, long hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+    <h3 class="mt-2 text-xl font-semibold">Elisa Dinda Gouw Tama</h3>
+    <p class="role-text font-semibold text-purple-700 uppercase tracking-wide">Bendahara</p>
+    <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+    <div class="social-links mt-3 flex space-x-4"></div>
+  </article>
+  <article class="profile-card bendahara relative bg-gradient-to-b from-purple-300 to-purple-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+    <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-purple-300"></div>
+    <img alt="Portrait photo of Alya Putri Adhana Dinata, female student, Bendahara, Angkatan 2024/2025, long black hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+    <h3 class="mt-2 text-xl font-semibold">Alya Putri Adhana Dinata</h3>
+    <p class="role-text font-semibold text-purple-700 uppercase tracking-wide">Bendahara</p>
+    <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+    <div class="social-links mt-3 flex space-x-4"></div>
+  </article>
+  <article class="profile-card keagamaan relative bg-gradient-to-b from-cyan-300 to-cyan-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+    <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-cyan-300"></div>
+    <img alt="Portrait photo of Liliyani, female student, S. Keagamaan, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+    <h3 class="mt-2 text-xl font-semibold">Liliyani</h3>
+    <p class="role-text font-semibold text-cyan-700 uppercase tracking-wide">S. Keagamaan</p>
+    <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+    <div class="social-links mt-3 flex space-x-4"></div>
+  </article>
+  <article class="profile-card upacara relative bg-gradient-to-b from-yellow-200 to-yellow-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+    <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-yellow-300"></div>
+    <img alt="Portrait photo of Avianni Navara, female student, S. Upacara, Angkatan 2024/2025, long hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+    <h3 class="mt-2 text-xl font-semibold">Avianni Navara</h3>
+    <p class="role-text font-semibold text-yellow-700 uppercase tracking-wide">S. Upacara</p>
+    <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+    <div class="social-links mt-3 flex space-x-4"></div>
+  </article>
+  <article class="profile-card keamanan relative bg-gradient-to-b from-pink-300 to-pink-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+    <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-pink-300"></div>
+    <img alt="Portrait photo of Alvian Rakha Dwi Prakoso, male student, S. Keamanan, Angkatan 2024/2025, short hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/l.jpg" width="100"/>
+    <h3 class="mt-2 text-xl font-semibold">Alvian Rakha Dwi Prakoso</h3>
+    <p class="role-text font-semibold text-pink-700 uppercase tracking-wide">S. Keamanan</p>
+    <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+    <div class="social-links mt-3 flex space-x-4"></div>
+  </article>
+  <article class="profile-card skebersihan relative bg-gradient-to-b from-purple-300 to-purple-100 rounded-2xl shadow-lg p-6 flex flex-col items-center text-center text-gray-900 hover:shadow-2xl hover:scale-[1.03] transition-transform duration-300">
+    <div aria-hidden="true" class="absolute top-0 left-0 w-full h-20 rounded-t-2xl bg-purple-300"></div>
+    <img alt="Portrait photo of Almira Diah Pramesthi, female student, S. Kebersihan, Angkatan 2024/2025, medium length hair, smiling" class="profile-img w-24 h-24 rounded-full border-4 border-white object-cover relative z-10 -mt-12" height="100" src="img/p.jpg" width="100"/>
+    <h3 class="mt-2 text-xl font-semibold">Almira Diah Pramesthi</h3>
+    <p class="role-text font-semibold text-purple-700 uppercase tracking-wide">S. Kebersihan</p>
+    <p class="text-sm text-gray-700 mt-1">Angkatan 2024/2025</p>
+    <div class="social-links mt-3 flex space-x-4"></div>
+  </article>
+</section>
+
+  <script>
+    // Toggle Menu
+    function toggleMenu() {
+      const navMenu = document.querySelector('.nav-menu');
+      const hamburger = document.querySelector('.hamburger');
+      navMenu.classList.toggle('active');
+      hamburger.classList.toggle('active');
+    }
+
+    // Close mobile menu when clicking a link
+    document.querySelectorAll('.nav-links-left a, .nav-links-right a, .nav-menu a').forEach(link => {
+      link.addEventListener('click', () => {
+        document.querySelector('.nav-menu').classList.remove('active');
+        document.querySelector('.hamburger').classList.remove('active');
+      });
+    });
+
+    // Show/Hide Sections
+    function showSection(sectionId) {
+      const sections = document.querySelectorAll(".card-container");
+      const buttons = document.querySelectorAll(".filter-btn");
+
+      buttons.forEach((btn) => {
+        btn.classList.remove(
+          "active",
+          "bg-teal-500",
+          "text-white",
+          "shadow-lg",
+          "translate-y-[-2px]"
+        );
+        if (btn.getAttribute("data-filter") === sectionId) {
+          btn.classList.add(
+            "active",
+            "bg-teal-500",
+            "text-white",
+            "shadow-lg",
+            "-translate-y-0.5"
+          );
+        }
+      });
+
+      sections.forEach((section) => {
+        if (section.id === sectionId) {
+          section.classList.remove("hidden");
+          setTimeout(() => {
+            section.classList.add("opacity-100");
+            section.classList.remove("opacity-0");
+          }, 10);
+        } else {
+          section.classList.add("hidden");
+          section.classList.remove("opacity-100");
+          section.classList.add("opacity-0");
+        }
+      });
+    }
+
+    // Handle Scroll for Filter Menu
+    window.addEventListener("scroll", () => {
+      const filterMenu = document.querySelector(".filter-btn").parentElement;
+      if (window.scrollY > 100) {
+        filterMenu.classList.add("opacity-40");
+      } else {
+        filterMenu.classList.remove("opacity-40");
+      }
+    });
+
+    // Initialize
+    document.addEventListener("DOMContentLoaded", () => {
+      showSection("semua");
+    });
+
+    // Filter buttons
+    document.querySelectorAll(".filter-btn").forEach((btn) => {
+      btn.addEventListener("click", (e) => {
+        e.preventDefault();
+        const sectionId = btn.getAttribute("data-filter");
+        showSection(sectionId);
+      });
+    });
+  </script>
+</body>
+</html>

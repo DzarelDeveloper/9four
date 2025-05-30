@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timeline - 9four</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --bg-color: #f7fafc;
+            --text-color: #1a202c;
+            --card-bg: #ffffff;
+            --accent-color: #3182ce;
+            --timeline-line: #e0e0e0;
+            --dot-color: #3182ce;
+            --shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            --transition: all 0.3s ease;
+            --nav-bg: rgba(0, 0, 0, 0.6);
+            --footer-bg: rgba(0, 0, 0, 0.8);
+            --primary: #ff6f91;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            padding-top: 60px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header Styles */
+        header {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(8px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            animation: slideDown 0.8s ease-out;
+        }
+
+        .navbar {
+            max-width: 1440px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .navbar-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1440px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            text-decoration: none;
+            transition: var(--transition);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .logo:hover {
+            color: var(--primary);
+            transform: translateX(-50%) scale(1.05);
+        }
+
+        .nav-links-left,
+        .nav-links-right {
+            display: flex;
+            gap: 1.5rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links-left li,
+        .nav-links-right li {
+            opacity: 0;
+            animation: fadeIn 0.5s ease forwards;
+            animation-delay: calc(0.2s * var(--i));
+        }
+
+        .nav-links-left a,
+        .nav-links-right a {
+            text-decoration: none;
+            color: white;
+            padding: 0.5rem 0.75rem;
+            border-radius: 6px;
+            transition: var(--transition);
+            font-weight: 500;
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-links-left a:hover,
+        .nav-links-right a:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .hamburger {
+            display: none;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 0.5rem;
+            z-index: 1001;
+        }
+
+        .hamburger span {
+            display: block;
+            width: 26px;
+            height: 3px;
+            background: white;
+            margin: 5px 0;
+            border-radius: 2px;
+            transition: var(--transition);
+            transform-origin: center;
+        }
+
+        .hamburger.active span:nth-child(1) {
+            transform: translateY(8px) rotate(45deg);
+        }
+
+        .hamburger.active span:nth-child(2) {
+            opacity: 0;
+            transform: scale(0);
+        }
+
+        .hamburger.active span:nth-child(3) {
+            transform: translateY(-8px) rotate(-45deg);
+        }
+
+        .nav-menu {
+            position: fixed;
+            top: 60px;
+            left: 0;
+            width: 100%;
+            background: var(--nav-bg);
+            backdrop-filter: blur(8px);
+            padding: 2rem;
+            flex-direction: column;
+            box-shadow: var(--shadow);
+            transform: translateY(-20px);
+            opacity: 0;
+            transition: var(--transition);
+            z-index: 1001;
+            justify-content: center;
+            align-items: center;
+            min-height: 300px;
+            list-style: none;
+            pointer-events: none;
+            display: none;
+        }
+
+        .nav-menu.active {
+            display: flex;
+            transform: translateY(0);
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .nav-menu li {
+            width: 100%;
+            text-align: center;
+            margin: 1rem 0;
+            opacity: 0;
+            animation: fadeInItem 0.3s ease forwards;
+            animation-delay: calc(0.1s * var(--i));
+        }
+
+        .nav-menu a {
+            font-size: 1.2rem;
+            padding: 0.75rem 1rem;
+            display: block;
+            color: white;
+            text-decoration: none;
+            transition: var(--transition);
+            border-radius: 8px;
+        }
+
+        .nav-menu a:hover {
+            background: rgba(255, 255, 255, 0.1);
+            color: var(--primary);
+            transform: translateX(10px);
+        }
+
+        /* Timeline Container */
+        .timeline-container {
+            max-width: 1200px;
+            margin: 3rem auto;
+            padding: 0 2rem;
+            position: relative;
+            flex: 1;
+        }
+
+        .timeline-line {
+            position: absolute;
+            left: 50%;
+            width: 2px;
+            height: 100%;
+            background: var(--timeline-line);
+            transform: translateX(-50%);
+        }
+
+        /* Event Styles */
+        .event {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 4rem;
+            position: relative;
+            padding: 1rem 0;
+            opacity: 0;
+            transform: translateY(20px);
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .event:nth-child(odd) .event-content {
+            order: 1;
+            margin-left: 2rem;
+        }
+
+        .event:nth-child(even) .event-content {
+            order: -1;
+            margin-right: 2rem;
+        }
+
+        .event-image {
+            width: 45%;
+            height: 300px;
+            border-radius: 12px;
+            object-fit: cover;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .event-image:hover {
+            transform: scale(1.02);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .event-content {
+            width: 45%;
+            padding: 1.5rem;
+            background: var(--card-bg);
+            border-radius: 12px;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+        }
+
+        .event-content:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+        }
+
+        .event-dot {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            width: 16px;
+            height: 16px;
+            background: var(--primary);
+            border-radius: 50%;
+            z-index: 1;
+            box-shadow: 0 0 0 4px rgba(255, 111, 145, 0.2);
+            transition: var(--transition);
+        }
+
+        .event:hover .event-dot {
+            transform: translate(-50%, -50%) scale(1.2);
+            box-shadow: 0 0 0 6px rgba(255, 111, 145, 0.2);
+        }
+
+        .date {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            display: block;
+            font-size: 0.9rem;
+        }
+
+        .mobile-toggle {
+            display: none;
+            color: var(--primary);
+            text-align: center;
+            cursor: pointer;
+            margin-top: 1rem;
+            padding: 0.5rem;
+            border-radius: 8px;
+            transition: var(--transition);
+            border: 1px solid var(--primary);
+        }
+
+        .mobile-toggle:hover {
+            background: var(--primary);
+            color: white;
+        }
+
+        /* Footer Styles */
+        footer {
+            background: var(--footer-bg);
+            color: white;
+            padding: 2rem;
+            margin-top: auto;
+            text-align: center;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .footer-section h4 {
+            color: var(--primary);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .footer-section h4::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 50px;
+            height: 2px;
+            background: var(--primary);
+        }
+
+        .footer-section p {
+            color: rgba(255, 255, 255, 0.8);
+            line-height: 1.8;
+            font-size: 0.95rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            margin-bottom: 1.5rem;
+        }
+
+        .social-links a {
+            color: white;
+            text-decoration: none;
+            background: rgba(255, 255, 255, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: var(--transition);
+        }
+
+        .social-links a:hover {
+            background: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .footer-bottom {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.9rem;
+        }
+
+        .footer-bottom a {
+            color: var(--primary);
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-bottom a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from { transform: translateY(-100%); opacity: 0; }
+            to { transform: translateY(0); opacity: 1; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInItem {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInUp {
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar-container { justify-content: space-between; }
+            .logo { position: static; transform: none; font-size: 1.2rem; }
+            .nav-links-left, .nav-links-right { display: none; }
+            .hamburger { display: block; }
+            .timeline-line, .event-dot { display: none; }
+            .event { flex-direction: column; margin-bottom: 2rem; }
+            .event-image { 
+                width: 100%; 
+                height: 200px; 
+                margin-bottom: 1rem; 
+                display: none; 
+                order: -1; 
+            }
+            .event-content { width: 100%; margin: 0 !important; }
+            .mobile-toggle { display: block; }
+            .event-image.active { display: block; }
+            .footer-section h4::after {
+                left: 50%;
+                transform: translateX(-50%);
+            }
+            .social-links {
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .event-content { padding: 1rem; }
+            .logo { font-size: 1rem; }
+            .nav-menu a { font-size: 1rem; padding: 0.75rem; }
+            footer { padding: 1.5rem 1rem; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <nav class="navbar">
+            <div class="navbar-container">
+                <ul class="nav-links-left">
+                    <li style="--i: 1"><a href="timeline.html"><i class="fas fa-stream"></i> Timeline</a></li>
+                    <li style="--i: 2"><a href="anggota.html"><i class="fas fa-users"></i> Anggota</a></li>
+                </ul>
+                <a href="index.html" class="logo">
+                    <i class="fas fa-graduation-cap"></i>
+                    <span>ofc_9four</span>
+                </a>
+                <ul class="nav-links-right">
+                    <li style="--i: 3"><a href="gallery.html"><i class="fas fa-images"></i> Galeri</a></li>
+                    <li style="--i: 4"><a href="spotify.html"><i class="fas fa-music"></i> Spotify</a></li>
+                </ul>
+                <button class="hamburger" aria-label="Buka menu" onclick="toggleMenu()">
+                    <span></span>
+                    <span></span>
+                    <span></span>
+                </button>
+            </div>
+        </nav>
+        <ul class="nav-menu">
+            <li style="--i: 1"><a href="timeline.html"><i class="fas fa-stream"></i> Timeline</a></li>
+            <li style="--i: 2"><a href="anggota.html"><i class="fas fa-users"></i> Anggota</a></li>
+            <li style="--i: 3"><a href="gallery.html"><i class="fas fa-images"></i> Galeri</a></li>
+            <li style="--i: 4"><a href="spotify.html"><i class="fas fa-music"></i> Spotify</a></li>
+        </ul>
+    </header>
+
+    <div class="timeline-container">
+        <div class="timeline-line"></div>
+        <div class="event">
+            <div class="event-dot"></div>
+            <img src="/img/k1.jpg" alt="Kegiatan 1" class="event-image">
+            <div class="event-content">
+                <span class="date">17/03/2025</span>
+                <h2>Pesantren Ramadhan</h2>
+                <p>Pembelajaran dari kegiatan pesantren Ramadhan ini ialah membaca Al-Qur'an, sholat berjamaah, dan membagikan takjil kepada yang berpuasa.</p>
+                <div class="mobile-toggle" onclick="toggleImage(this)">📸 Lihat Foto</div>
+            </div>
+        </div>
+        <div class="event">
+            <div class="event-dot"></div>
+            <img src="/img/gallery1.jpg" alt="Kegiatan 2" class="event-image">
+            <div class="event-content">
+                <span class="date">17/08/2024</span>
+                <h2>Event 17 Agustus</h2>
+                <p>Penampilan fashion show bertema pahlawan Indonesia.</p>
+                <div class="mobile-toggle" onclick="toggleImage(this)">📸 Lihat Foto</div>
+            </div>
+        </div>
+        <div class="event">
+            <div class="event-dot"></div>
+            <img src="/img/gallery2.jpg" alt="Kegiatan 3" class="event-image">
+            <div class="event-content">
+                <span class="date">17/03/2025</span>
+                <h2>Makan Sehat Bersama</h2>
+                <p>Kegiatan Makan Sehat Bergizi Bersama dan Meminum Tablet Penambah Darah ini merupakan Program dari Sekolah Sehat dan Ramah Anak. Setiap Siswa/i membawa tempat makan dan tumbler dari rumah masing-masing.</p>
+                <div class="mobile-toggle" onclick="toggleImage(this)">📸 Lihat Foto</div>
+            </div>
+        </div>
+        <div class="event">
+            <div class="event-dot"></div>
+            <img src="/img/gallery60.jpeg" alt="Kegiatan 4" class="event-image">
+            <div class="event-content">
+                <span class="date">20/03/2025</span>
+                <h2>Kegiatan Bersama</h2>
+                <p>Dokumentasi kegiatan bersama kelas 9E.</p>
+                <div class="mobile-toggle" onclick="toggleImage(this)">📸 Lihat Foto</div>
+            </div>
+        </div>
+        <div class="event">
+            <div class="event-dot"></div>
+            <img src="/img/gallery67.jpeg" alt="Kegiatan 5" class="event-image">
+            <div class="event-content">
+                <span class="date">25/03/2025</span>
+                <h2>Aktivitas Kelas</h2>
+                <p>Momen kebersamaan di dalam kelas.</p>
+                <div class="mobile-toggle" onclick="toggleImage(this)">📸 Lihat Foto</div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+    <div class="footer-content">
+        <div class="footer-section">
+            <h4>Official Website 9four</h4>
+            <p>Selamat datang di ofc_9four, tempat di mana kenangan indah kita bersama tetap hidup! Website ini dibuat sebagai wadah untuk mengabadikan momen-momen berharga selama kita menempuh perjalanan di SMPN2 TARUMAJAYA, khususnya di kelas 9D.</p>
+            <div class="social-links" style="display: flex; gap: 10px; align-items: center; flex-wrap: wrap;">
+                <a href="https://instagram.com/ofc_9four" aria-label="Instagram Official" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i>
+                </a>
+                <span>|</span>
+                <a href="https://www.tiktok.com/doetartarumajayaofficial" aria-label="TikTok" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-tiktok"></i>
+                </a>
+                <span>|</span>
+                <a href="https://www.youtube.com/@DoetarTarumajaya" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-youtube"></i>
+                </a>
+                <span>|</span>
+                <a href="https://facebook.com/DoetarTarumajaya" aria-label="Facebook" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-facebook"></i>
+                </a>
+                <span>|</span>
+                <a href="https://www.instagram.com/doetartarumajaya" aria-label="Instagram Official" target="_blank" rel="noopener noreferrer">
+                    <i class="fab fa-instagram"></i>
+                </a>
+            </div>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        Made by <a href="https://dzarelportfolio.netlify.app/" target="_blank" rel="noopener noreferrer">DzarelDeveloper</a>
+    </div>
+</footer>
+    <script>
+        // Toggle Menu
+        function toggleMenu() {
+            const navMenu = document.querySelector('.nav-menu');
+            const hamburger = document.querySelector('.hamburger');
+            navMenu.classList.toggle('active');
+            hamburger.classList.toggle('active');
+        }
+
+        // Mobile Image Toggle
+        function toggleImage(element) {
+            const event = element.closest('.event');
+            const image = event.querySelector('.event-image');
+            image.classList.toggle('active');
+            element.textContent = image.classList.contains('active') ? '🙈 Tutup Foto' : '📸 Lihat Foto';
+        }
+
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links-left a, .nav-links-right a, .nav-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.querySelector('.nav-menu').classList.remove('active');
+                document.querySelector('.hamburger').classList.remove('active');
+            });
+        });
+
+        // Add animation to events on scroll
+        const events = document.querySelectorAll('.event');
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 0.6s ease forwards';
+                }
+            });
+        }, { threshold: 0.1 });
+
+        events.forEach(event => observer.observe(event));
+    </script>
+</body>
+</html>
