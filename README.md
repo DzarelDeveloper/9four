@@ -12,7 +12,7 @@ Website ini adalah proyek edukatif yang dibuat untuk membantu pelajar dan komuni
 
 🎬 Sudah kami siapkan penjelasan lengkap, fitur, dan demo videonya di blog:
 
-👉 **[Baca Selengkapnya di Sini](https://blog.dzareldeveloper.com/2025/05/website-kenangan-kelas-html-css-js.html)**
+👉 **[Baca Selengkapnya di Sini](https://codesphere-d01010.blogspot.com/2025/05/cuma-modal-html-css-js-bikin-website.html)**
 
 ---
 
